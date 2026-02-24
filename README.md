@@ -1,6 +1,6 @@
 # n8n-nodes-polygon
 
-> [Velocity BPA Licensing Notice]
+> **[Velocity BPA Licensing Notice]**
 >
 > This n8n node is licensed under the Business Source License 1.1 (BSL 1.1).
 >
@@ -8,246 +8,185 @@
 >
 > For licensing information, visit https://velobpa.com/licensing or contact licensing@velobpa.com.
 
-A comprehensive n8n community node for interacting with the **Polygon blockchain** (PoS and zkEVM), providing 7 resource categories and 30+ operations for accounts, transactions, tokens, NFTs, smart contracts, blocks, and real-time event monitoring.
+This n8n community node provides seamless integration with Polygon blockchain services, offering 6 comprehensive resources for interacting with accounts, transactions, tokens, NFTs, smart contracts, and blockchain events. Build powerful Web3 workflows with support for balance queries, transaction monitoring, token operations, and smart contract interactions.
 
-![Polygon](https://img.shields.io/badge/Polygon-8247E5?style=for-the-badge&logo=polygon&logoColor=white)
-![n8n](https://img.shields.io/badge/n8n-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![License](https://img.shields.io/badge/license-BSL--1.1-blue?style=for-the-badge)
+![n8n Community Node](https://img.shields.io/badge/n8n-Community%20Node-blue)
+![License](https://img.shields.io/badge/license-BSL--1.1-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
+![Polygon](https://img.shields.io/badge/Polygon-8247E5)
+![Web3](https://img.shields.io/badge/Web3-Enabled-purple)
+![Blockchain](https://img.shields.io/badge/Blockchain-Ready-green)
 
 ## Features
 
-- **Multi-Network Support**: Polygon PoS Mainnet, Amoy Testnet, zkEVM Mainnet, Cardona Testnet
-- **Complete Account Management**: Balance checks, transaction history, token holdings
-- **Smart Contract Interaction**: Read contracts, fetch ABIs, view source code
-- **NFT Operations**: Metadata retrieval, ownership verification, collection info
-- **Real-Time Monitoring**: Trigger workflows on blocks, transfers, and token events
-- **Gas Estimation**: Accurate gas price and transaction cost estimation
+- **Multi-Chain Support** - Connect to Polygon mainnet, Mumbai testnet, and other Polygon networks
+- **Complete Account Management** - Query balances, transaction history, and account information
+- **Token Operations** - Interact with ERC-20 tokens, check balances, and monitor transfers
+- **NFT Integration** - Retrieve NFT metadata, ownership details, and collection information
+- **Smart Contract Interaction** - Call contract methods, monitor events, and execute transactions
+- **Real-time Event Monitoring** - Subscribe to blockchain events and contract logs
+- **Transaction Management** - Send transactions, check status, and retrieve detailed transaction data
+- **Gas Optimization** - Automatic gas estimation and fee optimization for transactions
 
 ## Installation
 
 ### Community Nodes (Recommended)
 
-1. Go to **Settings** > **Community Nodes** in n8n
-2. Search for `n8n-nodes-polygon`
-3. Click **Install**
+1. Open n8n
+2. Go to **Settings** → **Community Nodes**
+3. Click **Install a community node**
+4. Enter `n8n-nodes-polygon`
+5. Click **Install**
 
 ### Manual Installation
 
 ```bash
 cd ~/.n8n
-mkdir -p custom && cd custom
 npm install n8n-nodes-polygon
 ```
 
 ### Development Installation
 
 ```bash
-# 1. Extract the zip file
-unzip n8n-nodes-polygon.zip
+git clone https://github.com/Velocity-BPA/n8n-nodes-polygon.git
 cd n8n-nodes-polygon
-
-# 2. Install dependencies
-pnpm install
-
-# 3. Build the project
-pnpm build
-
-# 4. Create symlink to n8n custom nodes directory
-# For Linux/macOS:
+npm install
+npm run build
 mkdir -p ~/.n8n/custom
 ln -s $(pwd) ~/.n8n/custom/n8n-nodes-polygon
-
-# For Windows (run as Administrator):
-# mklink /D %USERPROFILE%\.n8n\custom\n8n-nodes-polygon %CD%
-
-# 5. Restart n8n
 n8n start
 ```
 
 ## Credentials Setup
 
-### Polygon RPC
-
-| Field | Description |
-|-------|-------------|
-| Network | Select Polygon network (Mainnet, Amoy, zkEVM, Cardona, Custom) |
-| RPC Provider | Choose provider (Alchemy, Infura, QuickNode, Public, Custom) |
-| API Key | Your provider API key |
-| Private Key | Optional: For write operations (signing transactions) |
-| Chain ID | Auto-populated based on network selection |
-
-### PolygonScan API
-
-| Field | Description |
-|-------|-------------|
-| API Key | Your PolygonScan API key |
-| Network | Select matching network |
-
-**Get API Keys:**
-- [Alchemy](https://www.alchemy.com/) - Free tier available
-- [Infura](https://infura.io/) - Free tier available
-- [QuickNode](https://www.quicknode.com/) - Free tier available
-- [PolygonScan](https://polygonscan.com/apis) - Free API key
+| Field | Description | Required |
+|-------|-------------|----------|
+| API Key | Your Polygon API key from Alchemy, Infura, or Moralis | Yes |
+| Network | Target network (mainnet, mumbai, testnet) | Yes |
+| RPC URL | Custom RPC endpoint URL (optional if using standard providers) | No |
+| Private Key | Wallet private key for transaction signing (encrypted) | No |
 
 ## Resources & Operations
 
-### Account
+### 1. Accounts
 
 | Operation | Description |
 |-----------|-------------|
-| Get Balance | Get native MATIC/ETH balance |
-| Get Token Balance | Get ERC-20 token balance |
-| Get Transactions | Get transaction history |
-| Get Token Transfers | Get ERC-20 transfer history |
-| Get NFTs | Get NFT holdings |
-| Validate Address | Validate and checksum address |
+| Get Balance | Retrieve native MATIC balance for an address |
+| Get Transaction History | Fetch transaction history for an account |
+| Get Account Info | Get detailed account information including nonce |
+| Validate Address | Verify if an address is valid Ethereum format |
 
-### Block
+### 2. Transactions
 
 | Operation | Description |
 |-----------|-------------|
-| Get Block | Get block by number |
-| Get Latest Block | Get most recent block |
-| Get Block Transactions | Get all transactions in a block |
+| Get Transaction | Retrieve transaction details by hash |
+| Send Transaction | Send a new transaction to the network |
+| Get Transaction Receipt | Get transaction receipt and status |
+| Estimate Gas | Estimate gas required for a transaction |
+| Get Block | Retrieve block information by number or hash |
 
-### Contract
-
-| Operation | Description |
-|-----------|-------------|
-| Read Contract | Call view/pure functions |
-| Get ABI | Fetch ABI from explorer |
-| Get Source Code | Get verified source code |
-
-### Token
+### 3. Tokens
 
 | Operation | Description |
 |-----------|-------------|
-| Get Token Info | Get name, symbol, decimals |
-| Get Token Supply | Get total supply |
+| Get Token Balance | Check ERC-20 token balance for an address |
+| Get Token Info | Retrieve token metadata (name, symbol, decimals) |
+| Transfer Token | Send ERC-20 tokens to another address |
+| Get Token Transfers | Fetch token transfer history |
+| Approve Token | Approve token spending allowance |
 
-### Transaction
-
-| Operation | Description |
-|-----------|-------------|
-| Get Transaction | Get transaction by hash |
-| Get Receipt | Get transaction receipt with logs |
-| Estimate Gas | Estimate gas for transaction |
-
-### NFT
+### 4. NFTs
 
 | Operation | Description |
 |-----------|-------------|
-| Get NFT Metadata | Get tokenURI and metadata |
-| Get NFT Owner | Get current owner |
-| Get Collection Info | Get collection details |
+| Get NFT Metadata | Retrieve NFT metadata and attributes |
+| Get Owner | Check NFT ownership details |
+| Get Collection | Fetch NFT collection information |
+| Transfer NFT | Transfer NFT to another address |
+| Get User NFTs | List all NFTs owned by an address |
 
-### Utility
+### 5. Smart Contracts
 
 | Operation | Description |
 |-----------|-------------|
-| Get Gas Price | Current gas prices (EIP-1559) |
-| Get Chain ID | Network chain ID |
-| Get Network Info | Full network details |
+| Call Function | Execute read-only contract function |
+| Send Transaction | Execute state-changing contract function |
+| Get Contract Info | Retrieve contract ABI and verification status |
+| Deploy Contract | Deploy new smart contract to network |
+| Get Logs | Fetch contract event logs |
 
-## Trigger Node
+### 6. Events
 
-The **Polygon Trigger** node monitors blockchain events in real-time:
-
-| Event | Description |
-|-------|-------------|
-| New Block | Trigger on each new block |
-| MATIC Transfer | Monitor native token transfers |
-| Token Transfer | Monitor ERC-20 transfers |
-| NFT Transfer | Monitor ERC-721 transfers |
-
-### Trigger Configuration
-
-- **Watch Address**: Address to monitor
-- **Direction**: Incoming, Outgoing, or Both
-- **Contract Filter**: Optionally filter by specific token/NFT contract
+| Operation | Description |
+|-----------|-------------|
+| Get Logs | Retrieve blockchain event logs by filter |
+| Subscribe to Events | Monitor real-time contract events |
+| Get Block Events | Fetch all events from a specific block |
+| Filter Events | Apply custom filters to event queries |
 
 ## Usage Examples
 
-### Get Wallet Balance
-
-```json
+```javascript
+// Get MATIC balance for an address
 {
-  "resource": "account",
+  "resource": "accounts",
   "operation": "getBalance",
-  "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f2b8E5"
+  "address": "0x1234567890123456789012345678901234567890"
 }
 ```
 
-### Read Smart Contract
-
-```json
+```javascript
+// Get ERC-20 token balance
 {
-  "resource": "contract",
-  "operation": "readContract",
-  "contractAddress": "0x...",
-  "functionName": "balanceOf",
-  "functionArgs": "[\"0x...\"]"
+  "resource": "tokens",
+  "operation": "getTokenBalance",
+  "address": "0x1234567890123456789012345678901234567890",
+  "tokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174"
 }
 ```
 
-### Monitor Token Transfers
+```javascript
+// Send MATIC transaction
+{
+  "resource": "transactions",
+  "operation": "sendTransaction",
+  "to": "0x1234567890123456789012345678901234567890",
+  "value": "1000000000000000000",
+  "gasLimit": "21000"
+}
+```
 
-1. Add **Polygon Trigger** node
-2. Select "Token Transfer" event
-3. Enter watch address
-4. Set direction (incoming/outgoing/both)
-5. Connect to workflow
-
-## Networks
-
-| Network | Chain ID | Currency | Type |
-|---------|----------|----------|------|
-| Polygon Mainnet | 137 | MATIC | Production |
-| Polygon Amoy | 80002 | MATIC | Testnet |
-| Polygon zkEVM | 1101 | ETH | Production |
-| zkEVM Cardona | 2442 | ETH | Testnet |
+```javascript
+// Get NFT metadata
+{
+  "resource": "nfts",
+  "operation": "getNftMetadata",
+  "contractAddress": "0x1234567890123456789012345678901234567890",
+  "tokenId": "1"
+}
+```
 
 ## Error Handling
 
-The node provides descriptive error messages for common issues:
-
-- **Invalid Address**: Address format validation failed
-- **Contract Not Verified**: ABI not available on explorer
-- **Insufficient Funds**: Not enough balance for transaction
-- **RPC Error**: Network connectivity issues
-
-## Security Best Practices
-
-1. **Never commit private keys** to version control
-2. **Use environment variables** for sensitive credentials
-3. **Test on testnets** before mainnet deployment
-4. **Validate addresses** before transactions
-5. **Monitor gas prices** to avoid overpaying
+| Error | Description | Solution |
+|-------|-------------|----------|
+| Invalid API Key | Authentication failed with provided credentials | Verify API key is correct and has sufficient permissions |
+| Insufficient Funds | Account balance too low for transaction | Check account balance and add funds if needed |
+| Gas Limit Too Low | Transaction failed due to insufficient gas | Increase gas limit or use gas estimation |
+| Invalid Address | Provided address format is incorrect | Ensure address is valid Ethereum format (0x...) |
+| Network Error | Connection to Polygon network failed | Check network status and RPC endpoint |
+| Rate Limit Exceeded | Too many API requests in time window | Implement request throttling or upgrade API plan |
 
 ## Development
 
 ```bash
-# Install dependencies
-pnpm install
-
-# Build
-pnpm build
-
-# Watch mode
-pnpm dev
-
-# Run tests
-pnpm test
-
-# Test with coverage
-pnpm test:coverage
-
-# Lint
-pnpm lint
-
-# Fix lint issues
-pnpm lint:fix
+npm install
+npm run build
+npm test
+npm run lint
+npm run dev
 ```
 
 ## Author
@@ -264,36 +203,24 @@ This n8n community node is licensed under the **Business Source License 1.1**.
 Permitted for personal, educational, research, and internal business use.
 
 ### Commercial Use
-Use of this node within any SaaS, PaaS, hosted platform, managed service,
-or paid automation offering requires a commercial license.
+Use of this node within any SaaS, PaaS, hosted platform, managed service, or paid automation offering requires a commercial license.
 
-For licensing inquiries:
-**licensing@velobpa.com**
+For licensing inquiries: **licensing@velobpa.com**
 
 See [LICENSE](LICENSE), [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md), and [LICENSING_FAQ.md](LICENSING_FAQ.md) for details.
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests and linting
-5. Submit a pull request
+Contributions are welcome! Please ensure:
 
-All contributions must comply with the BSL 1.1 license.
+1. Code follows existing style conventions
+2. All tests pass (`npm test`)
+3. Linting passes (`npm run lint`)
+4. Documentation is updated for new features
+5. Commit messages are descriptive
 
 ## Support
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/Velocity-BPA/n8n-nodes-polygon/issues)
-- **n8n Community**: [community.n8n.io](https://community.n8n.io)
-
-## Acknowledgments
-
-- [Polygon](https://polygon.technology/) - Layer 2 scaling solution
-- [ethers.js](https://docs.ethers.org/) - Ethereum library
-- [n8n](https://n8n.io/) - Workflow automation platform
-- [PolygonScan](https://polygonscan.com/) - Block explorer API
-
----
-
-Made with ❤️ for the n8n and Polygon communities
+- **Issues**: [GitHub Issues](https://github.com/Velocity-BPA/n8n-nodes-polygon/issues)
+- **Polygon Documentation**: [Polygon Developer Docs](https://docs.polygon.technology/)
+- **Polygon Community**: [Polygon Discord](https://discord.gg/polygon)
