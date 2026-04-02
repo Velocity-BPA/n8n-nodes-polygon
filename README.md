@@ -8,25 +8,25 @@
 >
 > For licensing information, visit https://velobpa.com/licensing or contact licensing@velobpa.com.
 
-This n8n community node provides seamless integration with Polygon blockchain services, offering 6 comprehensive resources for interacting with accounts, transactions, tokens, NFTs, smart contracts, and blockchain events. Build powerful Web3 workflows with support for balance queries, transaction monitoring, token operations, and smart contract interactions.
+A comprehensive n8n community node for interacting with Polygon blockchain networks. This node provides access to 6 key resources including blocks, transactions, accounts, smart contracts, tokens, and network information, enabling seamless integration of Polygon blockchain data into your n8n workflows.
 
 ![n8n Community Node](https://img.shields.io/badge/n8n-Community%20Node-blue)
 ![License](https://img.shields.io/badge/license-BSL--1.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
-![Polygon](https://img.shields.io/badge/Polygon-8247E5)
-![Web3](https://img.shields.io/badge/Web3-Enabled-purple)
-![Blockchain](https://img.shields.io/badge/Blockchain-Ready-green)
+![Polygon](https://img.shields.io/badge/Polygon-8247E5-blue)
+![Web3](https://img.shields.io/badge/Web3-Ready-blue)
+![Blockchain](https://img.shields.io/badge/Blockchain-API-blue)
 
 ## Features
 
-- **Multi-Chain Support** - Connect to Polygon mainnet, Mumbai testnet, and other Polygon networks
-- **Complete Account Management** - Query balances, transaction history, and account information
-- **Token Operations** - Interact with ERC-20 tokens, check balances, and monitor transfers
-- **NFT Integration** - Retrieve NFT metadata, ownership details, and collection information
-- **Smart Contract Interaction** - Call contract methods, monitor events, and execute transactions
-- **Real-time Event Monitoring** - Subscribe to blockchain events and contract logs
-- **Transaction Management** - Send transactions, check status, and retrieve detailed transaction data
-- **Gas Optimization** - Automatic gas estimation and fee optimization for transactions
+- **Block Operations** - Retrieve block data, transactions, and metadata from Polygon blockchain
+- **Transaction Management** - Query transaction details, receipts, and status information
+- **Account Monitoring** - Access account balances, transaction history, and account information
+- **Smart Contract Integration** - Interact with smart contracts, call functions, and monitor events
+- **Token Operations** - Handle ERC-20/ERC-721 tokens, balances, transfers, and metadata
+- **Network Information** - Access network statistics, gas prices, and chain information
+- **Multi-Network Support** - Works with Polygon mainnet, Mumbai testnet, and custom networks
+- **Real-time Data** - Get latest blockchain data with high-performance API integration
 
 ## Installation
 
@@ -61,110 +61,110 @@ n8n start
 
 | Field | Description | Required |
 |-------|-------------|----------|
-| API Key | Your Polygon API key from Alchemy, Infura, or Moralis | Yes |
-| Network | Target network (mainnet, mumbai, testnet) | Yes |
-| RPC URL | Custom RPC endpoint URL (optional if using standard providers) | No |
-| Private Key | Wallet private key for transaction signing (encrypted) | No |
+| API Key | Your Polygon API key for accessing blockchain data | Yes |
+| Network | Target network (mainnet, mumbai, custom) | Yes |
+| RPC URL | Custom RPC endpoint (if using custom network) | No |
 
 ## Resources & Operations
 
-### 1. Accounts
+### 1. Block
 
 | Operation | Description |
 |-----------|-------------|
-| Get Balance | Retrieve native MATIC balance for an address |
-| Get Transaction History | Fetch transaction history for an account |
-| Get Account Info | Get detailed account information including nonce |
-| Validate Address | Verify if an address is valid Ethereum format |
+| Get Block | Retrieve block information by block number or hash |
+| Get Latest Block | Get the most recent block on the network |
+| Get Block Transactions | List all transactions in a specific block |
+| Get Block Range | Retrieve multiple blocks within a specified range |
 
-### 2. Transactions
-
-| Operation | Description |
-|-----------|-------------|
-| Get Transaction | Retrieve transaction details by hash |
-| Send Transaction | Send a new transaction to the network |
-| Get Transaction Receipt | Get transaction receipt and status |
-| Estimate Gas | Estimate gas required for a transaction |
-| Get Block | Retrieve block information by number or hash |
-
-### 3. Tokens
+### 2. Transaction
 
 | Operation | Description |
 |-----------|-------------|
-| Get Token Balance | Check ERC-20 token balance for an address |
-| Get Token Info | Retrieve token metadata (name, symbol, decimals) |
-| Transfer Token | Send ERC-20 tokens to another address |
-| Get Token Transfers | Fetch token transfer history |
-| Approve Token | Approve token spending allowance |
+| Get Transaction | Retrieve transaction details by transaction hash |
+| Get Transaction Receipt | Get transaction receipt and execution details |
+| Get Transaction Status | Check transaction confirmation status |
+| Send Transaction | Broadcast a signed transaction to the network |
+| Estimate Gas | Calculate gas costs for a transaction |
 
-### 4. NFTs
-
-| Operation | Description |
-|-----------|-------------|
-| Get NFT Metadata | Retrieve NFT metadata and attributes |
-| Get Owner | Check NFT ownership details |
-| Get Collection | Fetch NFT collection information |
-| Transfer NFT | Transfer NFT to another address |
-| Get User NFTs | List all NFTs owned by an address |
-
-### 5. Smart Contracts
+### 3. Account
 
 | Operation | Description |
 |-----------|-------------|
-| Call Function | Execute read-only contract function |
-| Send Transaction | Execute state-changing contract function |
-| Get Contract Info | Retrieve contract ABI and verification status |
-| Deploy Contract | Deploy new smart contract to network |
-| Get Logs | Fetch contract event logs |
+| Get Balance | Retrieve MATIC balance for an account |
+| Get Transaction History | List transactions for a specific account |
+| Get Account Info | Get detailed account information and metadata |
+| Get Nonce | Retrieve the current nonce for an account |
 
-### 6. Events
+### 4. Smart Contract
 
 | Operation | Description |
 |-----------|-------------|
-| Get Logs | Retrieve blockchain event logs by filter |
-| Subscribe to Events | Monitor real-time contract events |
-| Get Block Events | Fetch all events from a specific block |
-| Filter Events | Apply custom filters to event queries |
+| Call Function | Execute a read-only function on a smart contract |
+| Send Transaction | Execute a state-changing function on a contract |
+| Get Contract Info | Retrieve contract metadata and ABI information |
+| Get Events | Query contract events and logs |
+| Verify Contract | Verify contract source code |
+
+### 5. Token
+
+| Operation | Description |
+|-----------|-------------|
+| Get Token Balance | Retrieve ERC-20 token balance for an account |
+| Get Token Info | Get token metadata, name, symbol, and decimals |
+| Get Token Transfers | List token transfer events |
+| Get NFT Metadata | Retrieve NFT metadata and ownership information |
+| Get Token Supply | Get total and circulating token supply |
+
+### 6. Network
+
+| Operation | Description |
+|-----------|-------------|
+| Get Gas Price | Retrieve current gas prices on the network |
+| Get Network Stats | Get network statistics and performance metrics |
+| Get Chain Info | Retrieve blockchain configuration and parameters |
+| Get Node Info | Get information about connected nodes |
 
 ## Usage Examples
 
 ```javascript
-// Get MATIC balance for an address
+// Get latest block information
 {
-  "resource": "accounts",
-  "operation": "getBalance",
-  "address": "0x1234567890123456789012345678901234567890"
+  "resource": "block",
+  "operation": "getLatestBlock",
+  "returnFullTransaction": true
 }
 ```
 
 ```javascript
-// Get ERC-20 token balance
+// Check token balance for an account
 {
-  "resource": "tokens",
+  "resource": "token",
   "operation": "getTokenBalance",
-  "address": "0x1234567890123456789012345678901234567890",
-  "tokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174"
+  "accountAddress": "0x742d35Cc6634C0532925a3b8D85B6BfD9C7C0b2F",
+  "tokenContract": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+  "blockNumber": "latest"
 }
 ```
 
 ```javascript
-// Send MATIC transaction
+// Call a smart contract function
 {
-  "resource": "transactions",
-  "operation": "sendTransaction",
-  "to": "0x1234567890123456789012345678901234567890",
-  "value": "1000000000000000000",
-  "gasLimit": "21000"
+  "resource": "smartContract",
+  "operation": "callFunction",
+  "contractAddress": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+  "functionName": "balanceOf",
+  "parameters": ["0x742d35Cc6634C0532925a3b8D85B6BfD9C7C0b2F"],
+  "abi": [...contract_abi...]
 }
 ```
 
 ```javascript
-// Get NFT metadata
+// Get transaction details and receipt
 {
-  "resource": "nfts",
-  "operation": "getNftMetadata",
-  "contractAddress": "0x1234567890123456789012345678901234567890",
-  "tokenId": "1"
+  "resource": "transaction",
+  "operation": "getTransaction",
+  "transactionHash": "0x8f4d6e5c3b2a1f9e8d7c6b5a4f3e2d1c9b8a7f6e5d4c3b2a1f9e8d7c6b5a4f3e",
+  "includeReceipt": true
 }
 ```
 
@@ -172,12 +172,12 @@ n8n start
 
 | Error | Description | Solution |
 |-------|-------------|----------|
-| Invalid API Key | Authentication failed with provided credentials | Verify API key is correct and has sufficient permissions |
-| Insufficient Funds | Account balance too low for transaction | Check account balance and add funds if needed |
-| Gas Limit Too Low | Transaction failed due to insufficient gas | Increase gas limit or use gas estimation |
-| Invalid Address | Provided address format is incorrect | Ensure address is valid Ethereum format (0x...) |
-| Network Error | Connection to Polygon network failed | Check network status and RPC endpoint |
-| Rate Limit Exceeded | Too many API requests in time window | Implement request throttling or upgrade API plan |
+| Invalid API Key | Authentication failed with provided credentials | Verify API key is correct and has proper permissions |
+| Rate Limit Exceeded | Too many requests sent to the API | Implement delays between requests or upgrade API plan |
+| Invalid Address | Blockchain address format is incorrect | Ensure address follows proper Ethereum/Polygon format (0x...) |
+| Transaction Not Found | Specified transaction hash does not exist | Verify transaction hash and ensure it's on the correct network |
+| Network Timeout | Request timed out waiting for response | Check network connection and try again |
+| Insufficient Funds | Account lacks sufficient balance for transaction | Ensure account has enough MATIC for gas fees |
 
 ## Development
 
@@ -222,5 +222,5 @@ Contributions are welcome! Please ensure:
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/Velocity-BPA/n8n-nodes-polygon/issues)
-- **Polygon Documentation**: [Polygon Developer Docs](https://docs.polygon.technology/)
-- **Polygon Community**: [Polygon Discord](https://discord.gg/polygon)
+- **Polygon Documentation**: [docs.polygon.technology](https://docs.polygon.technology)
+- **Developer Portal**: [polygon.technology/developers](https://polygon.technology/developers)
