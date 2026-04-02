@@ -57,8 +57,16 @@ export class Polygon implements INodeType {
             value: 'transactions',
           },
           {
-            name: 'unknown',
-            value: 'unknown',
+            name: 'Block',
+            value: 'block',
+          },
+          {
+            name: 'Transaction',
+            value: 'transaction',
+          },
+          {
+            name: 'Account',
+            value: 'account',
           },
           {
             name: 'Tokens',
@@ -73,8 +81,20 @@ export class Polygon implements INodeType {
             value: 'smartContracts',
           },
           {
+            name: 'SmartContract',
+            value: 'smartContract',
+          },
+          {
+            name: 'Token',
+            value: 'token',
+          },
+          {
             name: 'Events',
             value: 'events',
+          },
+          {
+            name: 'Network',
+            value: 'network',
           }
         ],
         default: 'accounts',
@@ -187,48 +207,94 @@ export class Polygon implements INodeType {
   default: 'sendRawTransaction',
 },
 {
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: { show: { resource: ['block'] } },
+	options: [
+		{
+			name: 'Get Block by Number',
+			value: 'getByNumber',
+			description: 'Get block information by block number',
+			action: 'Get block by number',
+		},
+		{
+			name: 'Get Block by Hash',
+			value: 'getByHash',
+			description: 'Get block information by block hash',
+			action: 'Get block by hash',
+		},
+		{
+			name: 'Get Latest Block Number',
+			value: 'getLatestNumber',
+			description: 'Get the latest block number',
+			action: 'Get latest block number',
+		},
+		{
+			name: 'Get Transaction Count by Block Number',
+			value: 'getTxCountByNumber',
+			description: 'Get transaction count in block by number',
+			action: 'Get transaction count by block number',
+		},
+		{
+			name: 'Get Transaction Count by Block Hash',
+			value: 'getTxCountByHash',
+			description: 'Get transaction count in block by hash',
+			action: 'Get transaction count by block hash',
+		},
+	],
+	default: 'getByNumber',
+},
+{
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: { show: { resource: ['transaction'] } },
+	options: [
+		{ name: 'Get Transaction by Hash', value: 'getTransactionByHash', description: 'Get transaction details by transaction hash', action: 'Get transaction by hash' },
+		{ name: 'Get Transaction Receipt', value: 'getTransactionReceipt', description: 'Get transaction receipt by transaction hash', action: 'Get transaction receipt' },
+		{ name: 'Send Raw Transaction', value: 'sendRawTransaction', description: 'Send a signed raw transaction to the network', action: 'Send raw transaction' },
+		{ name: 'Get Transaction by Block Hash and Index', value: 'getTransactionByBlockHashAndIndex', description: 'Get transaction by block hash and index position', action: 'Get transaction by block hash and index' },
+		{ name: 'Get Transaction by Block Number and Index', value: 'getTransactionByBlockNumberAndIndex', description: 'Get transaction by block number and index position', action: 'Get transaction by block number and index' },
+		{ name: 'Get Transaction Count', value: 'getTransactionCount', description: 'Get the number of transactions sent from an address', action: 'Get transaction count' }
+	],
+	default: 'getTransactionByHash',
+},
+{
   displayName: 'Operation',
   name: 'operation',
   type: 'options',
   noDataExpression: true,
-  displayOptions: {
-    show: {
-      resource: ['blocks'],
-    },
-  },
+  displayOptions: { show: { resource: ['account'] } },
   options: [
     {
-      name: 'Get Block By Number',
-      value: 'getBlockByNumber',
-      description: 'Get block information by block number',
-      action: 'Get block by number',
+      name: 'Get Balance',
+      value: 'getBalance',
+      description: 'Get account balance',
+      action: 'Get account balance'
     },
     {
-      name: 'Get Block By Hash',
-      value: 'getBlockByHash',
-      description: 'Get block information by block hash',
-      action: 'Get block by hash',
+      name: 'Get Transaction Count',
+      value: 'getTransactionCount',
+      description: 'Get account nonce',
+      action: 'Get account transaction count'
     },
     {
-      name: 'Get Latest Block Number',
-      value: 'blockNumber',
-      description: 'Get the latest block number',
-      action: 'Get latest block number',
+      name: 'Get Code',
+      value: 'getCode',
+      description: 'Get contract bytecode',
+      action: 'Get contract code'
     },
     {
-      name: 'Get Block By Number (Proxy)',
-      value: 'proxy',
-      description: 'Get block by number via proxy API',
-      action: 'Get block by number via proxy',
-    },
-    {
-      name: 'Get Block Rewards',
-      value: 'block',
-      description: 'Get block rewards information',
-      action: 'Get block rewards',
-    },
+      name: 'Get Storage At',
+      value: 'getStorageAt',
+      description: 'Get storage value at position',
+      action: 'Get storage value at position'
+    }
   ],
-  default: 'getBlockByNumber',
+  default: 'getBalance',
 },
 {
   displayName: 'Operation',
@@ -375,6 +441,82 @@ export class Polygon implements INodeType {
   default: 'call',
 },
 {
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+		},
+	},
+	options: [
+		{
+			name: 'Call Contract Method',
+			value: 'callMethod',
+			description: 'Call a contract method without creating a transaction',
+			action: 'Call contract method',
+		},
+		{
+			name: 'Estimate Gas',
+			value: 'estimateGas',
+			description: 'Estimate gas required for a contract interaction',
+			action: 'Estimate gas for contract interaction',
+		},
+		{
+			name: 'Get Contract Code',
+			value: 'getCode',
+			description: 'Get the bytecode of a smart contract',
+			action: 'Get contract bytecode',
+		},
+		{
+			name: 'Get Event Logs',
+			value: 'getLogs',
+			description: 'Get contract event logs based on filter criteria',
+			action: 'Get contract event logs',
+		},
+	],
+	default: 'callMethod',
+},
+{
+  displayName: 'Operation',
+  name: 'operation',
+  type: 'options',
+  noDataExpression: true,
+  displayOptions: {
+    show: {
+      resource: ['token'],
+    },
+  },
+  options: [
+    {
+      name: 'Get Balance',
+      value: 'getBalance',
+      description: 'Get token balance for an address',
+      action: 'Get token balance',
+    },
+    {
+      name: 'Get Metadata',
+      value: 'getMetadata',
+      description: 'Get token metadata information',
+      action: 'Get token metadata',
+    },
+    {
+      name: 'Get Transfer Events',
+      value: 'getTransferEvents',
+      description: 'Get token transfer events using eth_getLogs',
+      action: 'Get token transfer events',
+    },
+    {
+      name: 'Get Allowance',
+      value: 'getAllowance',
+      description: 'Get token allowance between owner and spender',
+      action: 'Get token allowance',
+    },
+  ],
+  default: 'getBalance',
+},
+{
   displayName: 'Operation',
   name: 'operation',
   type: 'options',
@@ -417,6 +559,21 @@ export class Polygon implements INodeType {
     },
   ],
   default: 'getLogs',
+},
+{
+  displayName: 'Operation',
+  name: 'operation',
+  type: 'options',
+  noDataExpression: true,
+  displayOptions: { show: { resource: ['network'] } },
+  options: [
+    { name: 'Get Chain ID', value: 'getChainId', description: 'Get the chain ID of the network', action: 'Get chain ID' },
+    { name: 'Get Gas Price', value: 'getGasPrice', description: 'Get the current gas price', action: 'Get gas price' },
+    { name: 'Get Fee History', value: 'getFeeHistory', description: 'Get fee history for specified blocks', action: 'Get fee history' },
+    { name: 'Get Network Version', value: 'getNetworkVersion', description: 'Get the network version', action: 'Get network version' },
+    { name: 'Get Client Version', value: 'getClientVersion', description: 'Get the client version', action: 'Get client version' }
+  ],
+  default: 'getChainId',
 },
       // Parameter definitions
 {
@@ -633,112 +790,179 @@ export class Polygon implements INodeType {
   description: 'The transaction hash to query via proxy',
 },
 {
-  displayName: 'Block Number',
-  name: 'block',
+	displayName: 'Block Number',
+	name: 'blockNumber',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['block'],
+			operation: ['getByNumber', 'getTxCountByNumber'],
+		},
+	},
+	default: 'latest',
+	description: 'Block number in hex format, or "latest", "earliest", "pending"',
+},
+{
+	displayName: 'Block Hash',
+	name: 'blockHash',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['block'],
+			operation: ['getByHash', 'getTxCountByHash'],
+		},
+	},
+	default: '',
+	description: 'Block hash in hex format',
+},
+{
+	displayName: 'Full Transactions',
+	name: 'fullTransactions',
+	type: 'boolean',
+	displayOptions: {
+		show: {
+			resource: ['block'],
+			operation: ['getByNumber', 'getByHash'],
+		},
+	},
+	default: false,
+	description: 'Whether to return full transaction objects (true) or just transaction hashes (false)',
+},
+{
+	displayName: 'Transaction Hash',
+	name: 'transactionHash',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['getTransactionByHash', 'getTransactionReceipt']
+		}
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'The hash of the transaction to retrieve'
+},
+{
+	displayName: 'Signed Transaction Data',
+	name: 'signedTransactionData',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['sendRawTransaction']
+		}
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'The signed transaction data to send to the network'
+},
+{
+	displayName: 'Block Hash',
+	name: 'blockHash',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['getTransactionByBlockHashAndIndex']
+		}
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'The hash of the block containing the transaction'
+},
+{
+	displayName: 'Block Number',
+	name: 'blockNumber',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['getTransactionByBlockNumberAndIndex', 'getTransactionCount']
+		}
+	},
+	default: 'latest',
+	placeholder: 'latest, earliest, pending, or hex number',
+	description: 'The block number (latest, earliest, pending, or hex value)'
+},
+{
+	displayName: 'Transaction Index',
+	name: 'transactionIndex',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['getTransactionByBlockHashAndIndex', 'getTransactionByBlockNumberAndIndex']
+		}
+	},
+	default: '0x0',
+	placeholder: '0x0',
+	description: 'The index position of the transaction in the block (hex value)'
+},
+{
+	displayName: 'Address',
+	name: 'address',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transaction'],
+			operation: ['getTransactionCount']
+		}
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'The address to get the transaction count for'
+},
+{
+  displayName: 'Address',
+  name: 'address',
   type: 'string',
   required: true,
   displayOptions: {
     show: {
-      resource: ['blocks'],
-      operation: ['getBlockByNumber'],
-    },
-  },
-  default: 'latest',
-  description: 'Block number (hex), "latest", "earliest", or "pending"',
-},
-{
-  displayName: 'Include Full Transactions',
-  name: 'fullTransactions',
-  type: 'boolean',
-  displayOptions: {
-    show: {
-      resource: ['blocks'],
-      operation: ['getBlockByNumber'],
-    },
-  },
-  default: false,
-  description: 'Whether to include full transaction objects',
-},
-{
-  displayName: 'Block Hash',
-  name: 'hash',
-  type: 'string',
-  required: true,
-  displayOptions: {
-    show: {
-      resource: ['blocks'],
-      operation: ['getBlockByHash'],
-    },
+      resource: ['account'],
+      operation: ['getBalance', 'getTransactionCount', 'getCode', 'getStorageAt']
+    }
   },
   default: '',
-  description: 'Hash of the block',
-},
-{
-  displayName: 'Include Full Transactions',
-  name: 'fullTransactions',
-  type: 'boolean',
-  displayOptions: {
-    show: {
-      resource: ['blocks'],
-      operation: ['getBlockByHash'],
-    },
-  },
-  default: false,
-  description: 'Whether to include full transaction objects',
-},
-{
-  displayName: 'Tag',
-  name: 'tag',
-  type: 'options',
-  displayOptions: {
-    show: {
-      resource: ['blocks'],
-      operation: ['proxy'],
-    },
-  },
-  options: [
-    {
-      name: 'Latest',
-      value: 'latest',
-    },
-    {
-      name: 'Earliest',
-      value: 'earliest',
-    },
-    {
-      name: 'Pending',
-      value: 'pending',
-    },
-  ],
-  default: 'latest',
-  description: 'Block parameter',
-},
-{
-  displayName: 'Boolean',
-  name: 'boolean',
-  type: 'boolean',
-  displayOptions: {
-    show: {
-      resource: ['blocks'],
-      operation: ['proxy'],
-    },
-  },
-  default: true,
-  description: 'Show full transaction objects',
+  placeholder: '0x742d35Cc6634C0532925a3b8D4c0746E47516b2C',
+  description: 'The address to query'
 },
 {
   displayName: 'Block Number',
-  name: 'blockno',
+  name: 'blockNumber',
+  type: 'string',
+  displayOptions: {
+    show: {
+      resource: ['account'],
+      operation: ['getBalance', 'getTransactionCount', 'getCode', 'getStorageAt']
+    }
+  },
+  default: 'latest',
+  placeholder: 'latest',
+  description: 'Block number (latest, earliest, pending, or hex value)'
+},
+{
+  displayName: 'Storage Position',
+  name: 'position',
   type: 'string',
   required: true,
   displayOptions: {
     show: {
-      resource: ['blocks'],
-      operation: ['block'],
-    },
+      resource: ['account'],
+      operation: ['getStorageAt']
+    }
   },
-  default: '',
-  description: 'Block number to get rewards for',
+  default: '0x0',
+  placeholder: '0x0',
+  description: 'The storage position (hex value)'
 },
 {
   displayName: 'Contract Address',
@@ -1186,6 +1410,283 @@ export class Polygon implements INodeType {
   description: 'The Solidity compiler version used (e.g., v0.8.19+commit.7dd6d404)',
 },
 {
+	displayName: 'Contract Address',
+	name: 'contractAddress',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['callMethod', 'estimateGas', 'getCode'],
+		},
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'The address of the smart contract',
+},
+{
+	displayName: 'Method Data',
+	name: 'data',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['callMethod', 'estimateGas'],
+		},
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'The encoded method call data (function selector + parameters)',
+},
+{
+	displayName: 'From Address',
+	name: 'from',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['callMethod', 'estimateGas'],
+		},
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'The address the transaction is sent from (optional for eth_call)',
+},
+{
+	displayName: 'Gas Limit',
+	name: 'gas',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['callMethod', 'estimateGas'],
+		},
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'Maximum gas provided for the transaction execution (hex format)',
+},
+{
+	displayName: 'Gas Price',
+	name: 'gasPrice',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['callMethod', 'estimateGas'],
+		},
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'Gas price in wei (hex format)',
+},
+{
+	displayName: 'Value',
+	name: 'value',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['callMethod', 'estimateGas'],
+		},
+	},
+	default: '0x0',
+	placeholder: '0x0',
+	description: 'Value sent with this transaction in wei (hex format)',
+},
+{
+	displayName: 'Block Number',
+	name: 'blockNumber',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['callMethod', 'getCode'],
+		},
+	},
+	default: 'latest',
+	placeholder: 'latest',
+	description: 'Block number to query (latest, earliest, pending, or hex number)',
+},
+{
+	displayName: 'Filter From Block',
+	name: 'fromBlock',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['getLogs'],
+		},
+	},
+	default: 'latest',
+	placeholder: 'latest',
+	description: 'Starting block number for log filtering',
+},
+{
+	displayName: 'Filter To Block',
+	name: 'toBlock',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['getLogs'],
+		},
+	},
+	default: 'latest',
+	placeholder: 'latest',
+	description: 'Ending block number for log filtering',
+},
+{
+	displayName: 'Filter Address',
+	name: 'filterAddress',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['getLogs'],
+		},
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'Contract address to filter logs from (optional)',
+},
+{
+	displayName: 'Topics',
+	name: 'topics',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['getLogs'],
+		},
+	},
+	default: '',
+	placeholder: '["0x..."]',
+	description: 'Array of topics to filter logs (JSON array format, optional)',
+},
+{
+	displayName: 'Block Hash',
+	name: 'blockHash',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['smartContract'],
+			operation: ['getLogs'],
+		},
+	},
+	default: '',
+	placeholder: '0x...',
+	description: 'Block hash to filter logs from (alternative to fromBlock/toBlock)',
+},
+{
+  displayName: 'Contract Address',
+  name: 'contractAddress',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['token'],
+      operation: ['getBalance', 'getMetadata', 'getTransferEvents', 'getAllowance'],
+    },
+  },
+  default: '',
+  description: 'The token contract address',
+},
+{
+  displayName: 'Owner Address',
+  name: 'ownerAddress',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['token'],
+      operation: ['getBalance', 'getAllowance'],
+    },
+  },
+  default: '',
+  description: 'The address to check balance or allowance for',
+},
+{
+  displayName: 'Spender Address',
+  name: 'spenderAddress',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['token'],
+      operation: ['getAllowance'],
+    },
+  },
+  default: '',
+  description: 'The address that has the allowance',
+},
+{
+  displayName: 'Block Number',
+  name: 'blockNumber',
+  type: 'string',
+  displayOptions: {
+    show: {
+      resource: ['token'],
+      operation: ['getBalance', 'getMetadata', 'getAllowance'],
+    },
+  },
+  default: 'latest',
+  description: 'Block number to query at (latest, earliest, pending, or hex value)',
+},
+{
+  displayName: 'From Block',
+  name: 'fromBlock',
+  type: 'string',
+  displayOptions: {
+    show: {
+      resource: ['token'],
+      operation: ['getTransferEvents'],
+    },
+  },
+  default: 'latest',
+  description: 'Start block for log filtering',
+},
+{
+  displayName: 'To Block',
+  name: 'toBlock',
+  type: 'string',
+  displayOptions: {
+    show: {
+      resource: ['token'],
+      operation: ['getTransferEvents'],
+    },
+  },
+  default: 'latest',
+  description: 'End block for log filtering',
+},
+{
+  displayName: 'From Address',
+  name: 'fromAddress',
+  type: 'string',
+  displayOptions: {
+    show: {
+      resource: ['token'],
+      operation: ['getTransferEvents'],
+    },
+  },
+  default: '',
+  description: 'Filter transfers from this address (optional)',
+},
+{
+  displayName: 'To Address',
+  name: 'toAddress',
+  type: 'string',
+  displayOptions: {
+    show: {
+      resource: ['token'],
+      operation: ['getTransferEvents'],
+    },
+  },
+  default: '',
+  description: 'Filter transfers to this address (optional)',
+},
+{
   displayName: 'From Block',
   name: 'fromBlock',
   type: 'string',
@@ -1282,6 +1783,48 @@ export class Polygon implements INodeType {
   default: '',
   description: 'The ID of the filter to query or remove',
 },
+{
+  displayName: 'Block Count',
+  name: 'blockCount',
+  type: 'number',
+  required: true,
+  default: 10,
+  description: 'Number of blocks to fetch fee history for',
+  displayOptions: {
+    show: {
+      resource: ['network'],
+      operation: ['getFeeHistory']
+    }
+  }
+},
+{
+  displayName: 'Newest Block',
+  name: 'newestBlock',
+  type: 'string',
+  required: true,
+  default: 'latest',
+  description: 'The newest block number (hex), or "latest", "earliest", or "pending"',
+  displayOptions: {
+    show: {
+      resource: ['network'],
+      operation: ['getFeeHistory']
+    }
+  }
+},
+{
+  displayName: 'Reward Percentiles',
+  name: 'rewardPercentiles',
+  type: 'string',
+  required: false,
+  default: '25,50,75',
+  description: 'Comma-separated list of percentile values (0-100) for reward calculations',
+  displayOptions: {
+    show: {
+      resource: ['network'],
+      operation: ['getFeeHistory']
+    }
+  }
+},
     ],
   };
 
@@ -1294,16 +1837,26 @@ export class Polygon implements INodeType {
         return [await executeAccountsOperations.call(this, items)];
       case 'transactions':
         return [await executeTransactionsOperations.call(this, items)];
-      case 'unknown':
-        return [await executeunknownOperations.call(this, items)];
+      case 'block':
+        return [await executeBlockOperations.call(this, items)];
+      case 'transaction':
+        return [await executeTransactionOperations.call(this, items)];
+      case 'account':
+        return [await executeAccountOperations.call(this, items)];
       case 'tokens':
         return [await executeTokensOperations.call(this, items)];
       case 'nFTs':
         return [await executeNFTsOperations.call(this, items)];
       case 'smartContracts':
         return [await executeSmartContractsOperations.call(this, items)];
+      case 'smartContract':
+        return [await executeSmartContractOperations.call(this, items)];
+      case 'token':
+        return [await executeTokenOperations.call(this, items)];
       case 'events':
         return [await executeEventsOperations.call(this, items)];
+      case 'network':
+        return [await executeNetworkOperations.call(this, items)];
       default:
         throw new NodeOperationError(this.getNode(), `The resource "${resource}" is not supported`);
     }
@@ -1499,1253 +2052,3 @@ async function executeAccountsOperations(
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
       } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeTransactionsOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('polygonApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'sendRawTransaction': {
-          const data = this.getNodeParameter('data', i) as string;
-          
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_sendRawTransaction',
-            params: [data],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          result = JSON.parse(response);
-          break;
-        }
-
-        case 'getTransactionByHash': {
-          const hash = this.getNodeParameter('hash', i) as string;
-          
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_getTransactionByHash',
-            params: [hash],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          result = JSON.parse(response);
-          break;
-        }
-
-        case 'getTransactionReceipt': {
-          const hash = this.getNodeParameter('hash', i) as string;
-          
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_getTransactionReceipt',
-            params: [hash],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          result = JSON.parse(response);
-          break;
-        }
-
-        case 'estimateGas': {
-          const to = this.getNodeParameter('to', i) as string;
-          const from = this.getNodeParameter('from', i, '') as string;
-          const value = this.getNodeParameter('value', i, '') as string;
-          const estimateData = this.getNodeParameter('estimateData', i, '') as string;
-
-          const transactionObject: any = { to };
-          if (from) transactionObject.from = from;
-          if (value) transactionObject.value = value;
-          if (estimateData) transactionObject.data = estimateData;
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_estimateGas',
-            params: [transactionObject],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          result = JSON.parse(response);
-          break;
-        }
-
-        case 'gasPrice': {
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_gasPrice',
-            params: [],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          result = JSON.parse(response);
-          break;
-        }
-
-        case 'getTransactionByHashProxy': {
-          const txhash = this.getNodeParameter('txhash', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: 'https://api.polygonscan.com/api',
-            qs: {
-              module: 'proxy',
-              action: 'eth_getTransactionByHash',
-              txhash: txhash,
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getTransactionReceiptProxy': {
-          const txhash = this.getNodeParameter('txhash', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: 'https://api.polygonscan.com/api',
-            qs: {
-              module: 'proxy',
-              action: 'eth_getTransactionReceipt',
-              txhash: txhash,
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({ json: result, pairedItem: { item: i } });
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({ 
-          json: { error: error.message }, 
-          pairedItem: { item: i } 
-        });
-      } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeBlocksOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('polygonApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-      
-      switch (operation) {
-        case 'getBlockByNumber': {
-          const blockNumber = this.getNodeParameter('block', i) as string;
-          const fullTransactions = this.getNodeParameter('fullTransactions', i) as boolean;
-          
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_getBlockByNumber',
-            params: [blockNumber, fullTransactions],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-          
-          const response = await this.helpers.httpRequest(options) as any;
-          result = JSON.parse(response);
-          break;
-        }
-
-        case 'getBlockByHash': {
-          const blockHash = this.getNodeParameter('hash', i) as string;
-          const fullTransactions = this.getNodeParameter('fullTransactions', i) as boolean;
-          
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_getBlockByHash',
-            params: [blockHash, fullTransactions],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-          
-          const response = await this.helpers.httpRequest(options) as any;
-          result = JSON.parse(response);
-          break;
-        }
-
-        case 'blockNumber': {
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_blockNumber',
-            params: [],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-          
-          const response = await this.helpers.httpRequest(options) as any;
-          result = JSON.parse(response);
-          break;
-        }
-
-        case 'proxy': {
-          const tag = this.getNodeParameter('tag', i) as string;
-          const boolean = this.getNodeParameter('boolean', i) as boolean;
-
-          const queryParams = new URLSearchParams({
-            module: 'proxy',
-            action: 'eth_getBlockByNumber',
-            tag: tag,
-            boolean: boolean.toString(),
-            apikey: credentials.apiKey,
-          });
-
-          const options: any = {
-            method: 'GET',
-            url: `https://api.polygonscan.com/api?${queryParams.toString()}`,
-            json: true,
-          };
-          
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'block': {
-          const blockno = this.getNodeParameter('blockno', i) as string;
-
-          const queryParams = new URLSearchParams({
-            module: 'block',
-            action: 'getblockreward',
-            blockno: blockno,
-            apikey: credentials.apiKey,
-          });
-
-          const options: any = {
-            method: 'GET',
-            url: `https://api.polygonscan.com/api?${queryParams.toString()}`,
-            json: true,
-          };
-          
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({ json: result, pairedItem: { item: i } });
-      
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({ 
-          json: { error: error.message }, 
-          pairedItem: { item: i } 
-        });
-      } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeTokensOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('polygonApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'getTokenBalance': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const data = this.getNodeParameter('data', i) as string;
-          const block = this.getNodeParameter('block', i) as string;
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [
-                {
-                  to: contractAddress,
-                  data: data,
-                },
-                block,
-              ],
-              id: 1,
-            },
-          };
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getTokenMetadata': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const data = this.getNodeParameter('data', i) as string;
-          const block = this.getNodeParameter('block', i) as string;
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-            body: {
-              jsonrpc: '2.0',
-              method: 'eth_call',
-              params: [
-                {
-                  to: contractAddress,
-                  data: data,
-                },
-                block,
-              ],
-              id: 1,
-            },
-          };
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getTokenBalanceApi': {
-          const contractaddress = this.getNodeParameter('contractaddress', i) as string;
-          const address = this.getNodeParameter('address', i) as string;
-          const tag = this.getNodeParameter('tag', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: 'https://api.polygonscan.com/api',
-            qs: {
-              module: 'account',
-              action: 'tokenbalance',
-              contractaddress: contractaddress,
-              address: address,
-              tag: tag,
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getTokenSupply': {
-          const contractaddress = this.getNodeParameter('contractaddress', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: 'https://api.polygonscan.com/api',
-            qs: {
-              module: 'stats',
-              action: 'tokensupply',
-              contractaddress: contractaddress,
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getTokenInfo': {
-          const contractaddress = this.getNodeParameter('contractaddress', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: 'https://api.polygonscan.com/api',
-            qs: {
-              module: 'token',
-              action: 'tokeninfo',
-              contractaddress: contractaddress,
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getTokenTransfers': {
-          const contractaddress = this.getNodeParameter('contractaddress', i) as string;
-          const address = this.getNodeParameter('address', i) as string;
-          const page = this.getNodeParameter('page', i) as number;
-          const offset = this.getNodeParameter('offset', i) as number;
-          const sort = this.getNodeParameter('sort', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: 'https://api.polygonscan.com/api',
-            qs: {
-              module: 'account',
-              action: 'tokentx',
-              contractaddress: contractaddress,
-              address: address,
-              page: page,
-              offset: offset,
-              sort: sort,
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({ json: result, pairedItem: { item: i } });
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
-      } else {
-        if (error instanceof NodeApiError || error instanceof NodeOperationError) {
-          throw error;
-        }
-        throw new NodeApiError(this.getNode(), error, { 
-          message: `Polygon API error: ${error.message}`,
-          httpCode: error.statusCode || 500 
-        });
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeNFTsOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('polygonApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'getNFTOwner': {
-          const to = this.getNodeParameter('to', i) as string;
-          const data = this.getNodeParameter('data', i) as string;
-          const block = this.getNodeParameter('block', i) as string;
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_call',
-            params: [
-              {
-                to: to,
-                data: data,
-              },
-              block,
-            ],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getNFTMetadataURI': {
-          const to = this.getNodeParameter('to', i) as string;
-          const data = this.getNodeParameter('data', i) as string;
-          const block = this.getNodeParameter('block', i) as string;
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_call',
-            params: [
-              {
-                to: to,
-                data: data,
-              },
-              block,
-            ],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getNFTApprovedAddress': {
-          const to = this.getNodeParameter('to', i) as string;
-          const data = this.getNodeParameter('data', i) as string;
-          const block = this.getNodeParameter('block', i) as string;
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_call',
-            params: [
-              {
-                to: to,
-                data: data,
-              },
-              block,
-            ],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getERC721Transfers': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const address = this.getNodeParameter('address', i) as string;
-          const page = this.getNodeParameter('page', i) as number;
-          const offset = this.getNodeParameter('offset', i) as number;
-          const sort = this.getNodeParameter('sort', i) as string;
-
-          const params: any = {
-            module: 'account',
-            action: 'tokennfttx',
-            address: address,
-            page: page,
-            offset: offset,
-            sort: sort,
-            apikey: credentials.apiKey,
-          };
-
-          if (contractAddress) {
-            params.contractaddress = contractAddress;
-          }
-
-          const queryString = new URLSearchParams(params).toString();
-
-          const options: any = {
-            method: 'GET',
-            url: `https://api.polygonscan.com/api?${queryString}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getERC1155Transfers': {
-          const contractAddress = this.getNodeParameter('contractAddress', i) as string;
-          const address = this.getNodeParameter('address', i) as string;
-          const page = this.getNodeParameter('page', i) as number;
-          const offset = this.getNodeParameter('offset', i) as number;
-          const sort = this.getNodeParameter('sort', i) as string;
-
-          const params: any = {
-            module: 'account',
-            action: 'token1155tx',
-            address: address,
-            page: page,
-            offset: offset,
-            sort: sort,
-            apikey: credentials.apiKey,
-          };
-
-          if (contractAddress) {
-            params.contractaddress = contractAddress;
-          }
-
-          const queryString = new URLSearchParams(params).toString();
-
-          const options: any = {
-            method: 'GET',
-            url: `https://api.polygonscan.com/api?${queryString}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({
-        json: result,
-        pairedItem: { item: i },
-      });
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({
-          json: { error: error.message },
-          pairedItem: { item: i },
-        });
-      } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeSmartContractsOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('polygonApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'call': {
-          const to = this.getNodeParameter('to', i) as string;
-          const data = this.getNodeParameter('data', i) as string;
-          const block = this.getNodeParameter('block', i) as string;
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_call',
-            params: [
-              {
-                to,
-                data,
-              },
-              block,
-            ],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          const parsedResponse = JSON.parse(response);
-          
-          if (parsedResponse.error) {
-            throw new NodeApiError(this.getNode(), parsedResponse.error);
-          }
-          
-          result = parsedResponse.result;
-          break;
-        }
-
-        case 'estimateGas': {
-          const to = this.getNodeParameter('to', i) as string;
-          const from = this.getNodeParameter('from', i) as string;
-          const data = this.getNodeParameter('data', i) as string;
-          const value = this.getNodeParameter('value', i) as string;
-
-          const requestBody: any = {
-            jsonrpc: '2.0',
-            method: 'eth_estimateGas',
-            params: [
-              {
-                to,
-                data,
-              },
-            ],
-            id: 1,
-          };
-
-          if (from) {
-            requestBody.params[0].from = from;
-          }
-          
-          if (value && value !== '0x0') {
-            requestBody.params[0].value = value;
-          }
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          const parsedResponse = JSON.parse(response);
-          
-          if (parsedResponse.error) {
-            throw new NodeApiError(this.getNode(), parsedResponse.error);
-          }
-          
-          result = parsedResponse.result;
-          break;
-        }
-
-        case 'getLogs': {
-          const fromBlock = this.getNodeParameter('fromBlock', i) as string;
-          const toBlock = this.getNodeParameter('toBlock', i) as string;
-          const address = this.getNodeParameter('address', i) as string;
-          const topicsParam = this.getNodeParameter('topics', i) as any;
-
-          const topics = topicsParam.topic ? topicsParam.topic.map((t: any) => t.value) : [];
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_getLogs',
-            params: [
-              {
-                fromBlock,
-                toBlock,
-                address,
-                topics: topics.length > 0 ? topics : undefined,
-              },
-            ],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          const parsedResponse = JSON.parse(response);
-          
-          if (parsedResponse.error) {
-            throw new NodeApiError(this.getNode(), parsedResponse.error);
-          }
-          
-          result = parsedResponse.result;
-          break;
-        }
-
-        case 'getContractAbi': {
-          const address = this.getNodeParameter('address', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: 'https://api.polygonscan.com/api',
-            qs: {
-              module: 'contract',
-              action: 'getabi',
-              address,
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          
-          if (response.status !== '1') {
-            throw new NodeApiError(this.getNode(), { message: response.message || 'Failed to get contract ABI' });
-          }
-          
-          result = {
-            address,
-            abi: JSON.parse(response.result),
-          };
-          break;
-        }
-
-        case 'getContractSource': {
-          const address = this.getNodeParameter('address', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: 'https://api.polygonscan.com/api',
-            qs: {
-              module: 'contract',
-              action: 'getsourcecode',
-              address,
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          
-          if (response.status !== '1') {
-            throw new NodeApiError(this.getNode(), { message: response.message || 'Failed to get contract source code' });
-          }
-          
-          result = {
-            address,
-            sourceCode: response.result,
-          };
-          break;
-        }
-
-        case 'verifyContract': {
-          const address = this.getNodeParameter('address', i) as string;
-          const contractSourceCode = this.getNodeParameter('contractSourceCode', i) as string;
-          const contractName = this.getNodeParameter('contractName', i) as string;
-          const compilerVersion = this.getNodeParameter('compilerVersion', i) as string;
-
-          const options: any = {
-            method: 'POST',
-            url: 'https://api.polygonscan.com/api',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            form: {
-              module: 'contract',
-              action: 'verifysourcecode',
-              addresshash: address,
-              sourceCode: contractSourceCode,
-              contractname: contractName,
-              compilerversion: compilerVersion,
-              optimizationUsed: '0',
-              runs: '200',
-              apikey: credentials.apiKey,
-            },
-            json: true,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          
-          if (response.status !== '1') {
-            throw new NodeApiError(this.getNode(), { message: response.message || 'Failed to verify contract' });
-          }
-          
-          result = {
-            address,
-            guid: response.result,
-            message: 'Contract verification submitted successfully',
-          };
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({
-        json: result,
-        pairedItem: { item: i },
-      });
-
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({
-          json: { error: error.message },
-          pairedItem: { item: i },
-        });
-      } else {
-        throw error;
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeEventsOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('polygonApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'getLogs': {
-          const fromBlock = this.getNodeParameter('fromBlock', i) as string;
-          const toBlock = this.getNodeParameter('toBlock', i) as string;
-          const address = this.getNodeParameter('address', i) as string;
-          const topicsCollection = this.getNodeParameter('topics', i) as any;
-          const blockhash = this.getNodeParameter('blockhash', i) as string;
-
-          const topics: string[] = [];
-          if (topicsCollection.topic) {
-            for (const topicItem of topicsCollection.topic) {
-              if (topicItem.value) {
-                topics.push(topicItem.value);
-              }
-            }
-          }
-
-          const params: any = {};
-          if (blockhash) {
-            params.blockHash = blockhash;
-          } else {
-            params.fromBlock = fromBlock;
-            params.toBlock = toBlock;
-          }
-          
-          if (address) {
-            params.address = address;
-          }
-          
-          if (topics.length > 0) {
-            params.topics = topics;
-          }
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_getLogs',
-            params: [params],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          const responseData = JSON.parse(response);
-          
-          if (responseData.error) {
-            throw new NodeApiError(this.getNode(), responseData.error);
-          }
-          
-          result = responseData.result;
-          break;
-        }
-
-        case 'newFilter': {
-          const fromBlock = this.getNodeParameter('fromBlock', i) as string;
-          const toBlock = this.getNodeParameter('toBlock', i) as string;
-          const address = this.getNodeParameter('address', i) as string;
-          const topicsCollection = this.getNodeParameter('topics', i) as any;
-
-          const topics: string[] = [];
-          if (topicsCollection.topic) {
-            for (const topicItem of topicsCollection.topic) {
-              if (topicItem.value) {
-                topics.push(topicItem.value);
-              }
-            }
-          }
-
-          const params: any = {
-            fromBlock,
-            toBlock,
-          };
-          
-          if (address) {
-            params.address = address;
-          }
-          
-          if (topics.length > 0) {
-            params.topics = topics;
-          }
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_newFilter',
-            params: [params],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          const responseData = JSON.parse(response);
-          
-          if (responseData.error) {
-            throw new NodeApiError(this.getNode(), responseData.error);
-          }
-          
-          result = { filterId: responseData.result };
-          break;
-        }
-
-        case 'getFilterChanges': {
-          const filterId = this.getNodeParameter('filterId', i) as string;
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_getFilterChanges',
-            params: [filterId],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          const responseData = JSON.parse(response);
-          
-          if (responseData.error) {
-            throw new NodeApiError(this.getNode(), responseData.error);
-          }
-          
-          result = responseData.result;
-          break;
-        }
-
-        case 'getFilterLogs': {
-          const filterId = this.getNodeParameter('filterId', i) as string;
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_getFilterLogs',
-            params: [filterId],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          const responseData = JSON.parse(response);
-          
-          if (responseData.error) {
-            throw new NodeApiError(this.getNode(), responseData.error);
-          }
-          
-          result = responseData.result;
-          break;
-        }
-
-        case 'uninstallFilter': {
-          const filterId = this.getNodeParameter('filterId', i) as string;
-
-          const requestBody = {
-            jsonrpc: '2.0',
-            method: 'eth_uninstallFilter',
-            params: [filterId],
-            id: 1,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `https://polygon-mainnet.g.alchemy.com/v2/${credentials.apiKey}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            json: false,
-          };
-
-          const response = await this.helpers.httpRequest(options) as any;
-          const responseData = JSON.parse(response);
-          
-          if (responseData.error) {
-            throw new NodeApiError(this.getNode(), responseData.error);
-          }
-          
-          result = { uninstalled: responseData.result };
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({
-        json: result,
-        pairedItem: { item: i },
-      });
-
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({
-          json: { error: error.message },
-          pairedItem: { item: i },
-        });
-      } else {
-        throw error;
-      }
-    }
-  }
-
-  return returnData;
-}
