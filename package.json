@@ -2,7 +2,7 @@
   "name": "@velocity-bpa/n8n-nodes-polygon",
   "version": "1.0.0",
   "description": "n8n community node for Polygon blockchain RPC operations",
-  "license": "bsl-catalog",
+  "license": "SEE LICENSE IN LICENSE.md",
   "homepage": "",
   "author": {
     "name": "Velocity BPA",
@@ -50,7 +50,7 @@
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "eslint": "^8.56.0",
-    "n8n-workflow": "*",
+    "n8n-workflow": "1.57.0",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
